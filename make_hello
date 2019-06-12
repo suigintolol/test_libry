@@ -1,0 +1,27 @@
+# x32: i686-w64-mingw32-g++
+# x64: x86_64-w64-mingw32-g++
+
+compiler = g++
+win_compiler = i686-w64-mingw32-g++
+
+
+all: libhello.a
+
+libhello.a: hello.o
+	ar cr libhello.a hello.o
+
+hello.o:
+	$(compiler) -c hello.cpp 
+
+
+win: win_libhello.a
+
+win_libhello.a: win_hello.o
+	ar cr libhello.a hello.o 
+
+win_hello.o:
+	$(win_compiler) -c hello.cpp -static-libgcc -static-libstdc++
+
+clean:
+	rm -f *.o *.a all
+

@@ -1,0 +1,39 @@
+compiler = g++
+win_compiler = i686-w64-mingw32-g++
+
+all: runfile
+	./roon.exe
+
+runfile: makehello makeworld main.o
+	$(compiler) -o roon.exe main.o libhello.a libworld.so -Wl,-rpath,.
+
+runfile_lite: main.o
+	$(compiler) -o roon main.o libhello.a libworld.so -Wl,-rpath,.
+
+main.o: 
+	$(compiler) -c main.cpp
+
+makehello:
+	make -f make_hello
+
+makeworld:
+	make -f make_world
+
+
+win: win_runfile
+	./roon.exe
+
+win_runfile: win_makehello win_makeworld win_main.o
+	$(win_compiler) -o roon.exe main.o libhello.a libworld.so -Wl,-rpath,. -static-libgcc -static-libstdc++
+
+win_main.o: 
+	$(win_compiler) -c main.cpp -static-libgcc -static-libstdc++
+
+win_makehello:
+	make -f make_hello win
+
+win_makeworld:
+	make -f make_world win
+
+clean:
+	rm -f *.o *.so *.a *.exe  all
