@@ -1,0 +1,19 @@
+COMPILER = g++
+
+.PHONY: all clean win_clean
+
+all: hello
+
+hello: libhello.a
+
+libhello.a: hello.o
+	ar cr libhello.a hello.o
+
+hello.o: hello.cpp 
+	$(COMPILER) -c hello.cpp 
+
+clean:
+	rm -f *.o *.a all
+
+win_clean:
+	rm -f *.o *.a all

@@ -1,0 +1,19 @@
+COMPILER = g++
+
+.PHONY: all clean win_clean
+
+all: world
+
+world: libworld.so
+	
+libworld.so: world.o
+	$(COMPILER) -shared -o libworld.so world.o
+
+world.o: world.cpp
+	$(COMPILER) -c -fPIC world.cpp
+
+clean:
+	rm -f *.o *.so all
+
+win_clean:
+	Del -f *.o *.so all

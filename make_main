@@ -1,0 +1,24 @@
+COMPILER = g++
+
+.PHONY: all clean win_clean makehello makeworld
+
+all: runfile
+	
+
+runfile: makehello makeworld main.o
+	$(COMPILER) -o roon main.o libhello.a libworld.so -Wl,-rpath,.
+
+makehello: 
+	make -f make_hello
+	
+makeworld: 
+	make -f make_world
+
+main.o: 
+	$(COMPILER) -c main.cpp 
+
+clean:
+	rm -f *.o *.so *.a *.exe  all
+	
+win_clean:
+	Del -f *.o *.so *.a *.exe  all
